@@ -1,6 +1,7 @@
 ﻿using Engine;
 using Microsoft.Xna.Framework;
 using System;
+using TickTickBoom.GameStates;
 
 namespace TickTickBoom
 {
@@ -28,12 +29,6 @@ namespace TickTickBoom
             Window.Title = "TickTickBoom";
         }
 
-        protected override void Initialize()
-        {
-            // TODO: Add your initialization logic here
-
-            base.Initialize();
-        }
         protected override void LoadContent()
         {
             base.LoadContent();
@@ -41,8 +36,17 @@ namespace TickTickBoom
             gameWorldSize = new Point(1440, 825);
             windowSize = new Point(1024, 586);
             IsFullScreen = false;
+            // Load the player's progress from a file
             LoadProgress();
-            // GameStateManager.AddGameState(STATENAME_TITLE, new Title)
+            // Add the game states
+            GameStateManager.AddGameState(STATENAME_TITLE, new TitleGameState());
+            GameStateManager.AddGameState(STATENAME_LEVELSELECT, new LevelSelectionGameState());
+            GameStateManager.AddGameState(STATENAME_HELP, new HelpGameState());
+            GameStateManager.AddGameState(STATENAME_PLAYING, PlayingGameState());
+            // Start at the title screen
+            GameStateManager.SwitchGameState(STATENAME_TITLE);
+            // Play Background Music
+            AssetManager.PlaySong("Sounds/snd_music", true);
         }
     }
 }
