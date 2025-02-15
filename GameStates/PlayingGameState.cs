@@ -1,6 +1,9 @@
-﻿namespace TickTickBoom.GameStates
+﻿using Engine;
+
+namespace TickTickBoom.GameStates
 {
-    internal class PlayingGameState
+    class PlayingGameState : GameState
     {
+
     }
 }

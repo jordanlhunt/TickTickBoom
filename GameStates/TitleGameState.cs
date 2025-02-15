@@ -14,7 +14,6 @@ namespace TickTickBoom.GameStates
         string HELP_BUTTON_LOCATION = "Sprites/UI/spr_button_help";
 
         #endregion
-
         #region Constructor
         public TitleGameState()
         {
@@ -32,7 +31,6 @@ namespace TickTickBoom.GameStates
             gameObjectList.AddChild(helpButton);
         }
         #endregion
-
         #region Public Methods
         public override void HandleInput(InputHelper inputHelper)
         {
