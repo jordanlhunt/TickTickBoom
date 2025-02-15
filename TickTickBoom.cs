@@ -42,7 +42,7 @@ namespace TickTickBoom
             GameStateManager.AddGameState(STATENAME_TITLE, new TitleGameState());
             GameStateManager.AddGameState(STATENAME_LEVELSELECT, new LevelSelectionGameState());
             GameStateManager.AddGameState(STATENAME_HELP, new HelpGameState());
-            GameStateManager.AddGameState(STATENAME_PLAYING, PlayingGameState());
+            GameStateManager.AddGameState(STATENAME_PLAYING, new PlayingGameState());
             // Start at the title screen
             GameStateManager.SwitchGameState(STATENAME_TITLE);
             // Play Background Music
