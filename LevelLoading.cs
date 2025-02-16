@@ -2,11 +2,10 @@
 using Microsoft.Xna.Framework;
 using System.Collections.Generic;
 using System.IO;
-using TickTickBoom.LevelObjects;
 
 namespace TickTickBoom
 {
-    partial class LevelLoading : GameObjectList
+    partial class Level : GameObjectList
     {
         #region Public Methods
         void LoadLevelFromFile(string fileName)

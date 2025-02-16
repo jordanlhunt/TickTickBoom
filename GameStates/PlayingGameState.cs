@@ -98,7 +98,7 @@ namespace TickTickBoom
             SpriteGameObject overlay = new SpriteGameObject(assetName, 1);
             overlay.SetOriginToCenter();
             overlay.LocalPosition = new Vector2(OVERLAY_X, OVERLAY_Y);
-            gameObjectList.AddChild(gameOverlay);
+            gameObjectList.AddChild(overlay);
             return overlay;
         }
 
