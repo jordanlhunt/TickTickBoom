@@ -35,7 +35,7 @@ namespace TickTickBoom.LevelObjects
         {
             get
             {
-                return Surface;
+                return surfaceType;
             }
         }
         #endregion
