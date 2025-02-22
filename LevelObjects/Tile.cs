@@ -58,11 +58,11 @@ namespace TickTickBoom
             }
             if (tileType == TileType.Wall)
             {
-                tileImage = new SpriteGameObject("Sprites/Titles/spr_wall" + surfaceExtenion, TickTickBoom.DEPTH_LAYER_LEVEL_TILES);
+                tileImage = new SpriteGameObject("Sprites/Tiles/spr_wall" + surfaceExtenion, TickTickBoom.DEPTH_LAYER_LEVEL_TILES);
             }
             else if (tileType == TileType.Platform)
             {
-                tileImage = new SpriteGameObject("Sprites/Titles/spr_platform" + surfaceExtenion, TickTickBoom.DEPTH_LAYER_LEVEL_TILES);
+                tileImage = new SpriteGameObject("Sprites/Tiles/spr_platform" + surfaceExtenion, TickTickBoom.DEPTH_LAYER_LEVEL_TILES);
             }
             // if there is an image then make it a child of this object
             if (tileImage != null)
