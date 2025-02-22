@@ -12,12 +12,11 @@
     <ApplicationIcon>Icon.ico</ApplicationIcon>
   </PropertyGroup>
   <ItemGroup>
-    <None Remove="Content\Sprites\LevelsObjects\Player\spr_idle.png" />
-    <None Remove="Content\Sprites\LevelsObjects\Rocket\spr_rocket%403.png" />
-    <None Remove="Content\Sprites\LevelsObjects\Spark\spr_idle.png" />
-    <None Remove="Content\Sprites\LevelsObjects\spr_goal.png" />
-    <None Remove="Content\Sprites\LevelsObjects\spr_water.png" />
-    <None Remove="Content\Sprites\LevelsObjects\Turtle\spr_idle.png" />
+    <Compile Remove="Content\Sprites\LevelsObjects\**" />
+    <EmbeddedResource Remove="Content\Sprites\LevelsObjects\**" />
+    <None Remove="Content\Sprites\LevelsObjects\**" />
+  </ItemGroup>
+  <ItemGroup>
     <None Remove="Content\Sprites\Tiles\spr_platform.png" />
     <None Remove="Content\Sprites\Tiles\spr_platform_hot.png" />
     <None Remove="Content\Sprites\Tiles\spr_platform_ice.png" />
@@ -37,22 +36,6 @@
     <None Remove="Content\Sprites\UI\spr_welldone.png" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Content\Sprites\LevelsObjects\Player\spr_idle.png" />
-    <Content Include="Content\Sprites\LevelsObjects\Rocket\spr_rocket@3.png">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Content\Sprites\LevelsObjects\Spark\spr_idle.png">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Content\Sprites\LevelsObjects\spr_goal.png">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Content\Sprites\LevelsObjects\spr_water.png">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Content\Sprites\LevelsObjects\Turtle\spr_idle.png">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
     <Content Include="Content\Sprites\Tiles\spr_platform.png" />
     <Content Include="Content\Sprites\Tiles\spr_platform_hot.png" />
     <Content Include="Content\Sprites\Tiles\spr_platform_ice.png" />
