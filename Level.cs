@@ -16,6 +16,7 @@ namespace TickTickBoom
         Tile[,] tiles;
         List<Waterdrop> waterDrops;
         SpriteGameObject goal;
+        Player player;
         #endregion
 
         #region Properties

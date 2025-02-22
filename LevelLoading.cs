@@ -123,6 +123,9 @@ namespace TickTickBoom
         }
         private void LoadPlayerCharacter(int x, int y)
         {
+            player = new Player();
+            player.LocalPosition = GetCellPosition(x, y) + new Vector2(TileWidth / 2, TileHeight);
+            AddChild(player);
         }
         private void LoadGoal(int x, int y)
         {

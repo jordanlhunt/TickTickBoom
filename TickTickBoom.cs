@@ -46,7 +46,7 @@ namespace TickTickBoom
             // Start at the title screen
             GameStateManager.SwitchGameState(STATENAME_TITLE);
             // Play Background Music
-            AssetManager.PlaySong("Sounds/snd_music", true);
+            // AssetManager.PlaySong("Sounds/snd_music", true);
         }
     }
 }
