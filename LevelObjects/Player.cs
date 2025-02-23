@@ -8,7 +8,7 @@ namespace TickTickBoom
     {
         #region Constants
         // Walking speed in pixels per second
-        const float WALKING_SPEED = 400f;
+        const float WALKING_SPEED = 425.5f;
         const string IDLE_ANIMATION_LOCATION = "Sprites/LevelObjects/Player/spr_idle";
         const string RUN_ANIMATION_LOCATION = "Sprites/LevelObjects/Player/spr_run@13";
         const string JUMP_ANIMATION_LOCATION = "Sprites/LevelObjects/Player/spr_jump@14";
@@ -34,7 +34,7 @@ namespace TickTickBoom
             // Load the Player's various Animations
             LoadAnimation(IDLE_ANIMATION_LOCATION, "idle", true, IDLE_ANIAMTION_FRAMETIME);
             LoadAnimation(RUN_ANIMATION_LOCATION, "run", true, RUN_ANIMATION_FRAMETIME);
-            LoadAnimation(JUMP_ANIMATION_LOCATION, "jump", true, JUMP_ANIMATION_FRAMETIME);
+            LoadAnimation(JUMP_ANIMATION_LOCATION, "jump", false, JUMP_ANIMATION_FRAMETIME);
             LoadAnimation(CELEBRATION_ANIMATION_LOCATION, "celebrate", false, CELEBRATE_ANIMATION_FRAMETIME);
             LoadAnimation(DIE_ANIMATION_LOCATION, "die", true, DIE_ANIMATION_FRAMETIME);
             LoadAnimation(EXPLODE_ANIMATION_LOCATION, "explode", false, EXPLODE_ANIMATION_FRAMETIME);
@@ -47,7 +47,7 @@ namespace TickTickBoom
         #region Public Methods
         public override void HandleInput(InputHelper inputHelper)
         {
-            // Arrow keys: move left and wright 
+            // Arrow keys: move left and right 
             if (inputHelper.IsKeyDown(Keys.Left) || inputHelper.IsKeyDown(Keys.A))
             {
                 isFacingLeft = true;

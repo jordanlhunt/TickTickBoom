@@ -60,7 +60,7 @@
   </ItemGroup>
   <ItemGroup>
     <Reference Include="Engine">
-      <HintPath>..\Engine\Engine\Engine\bin\Debug\net8.0\Engine.dll</HintPath>
+      <HintPath>..\Engine\Engine\Engine\obj\Debug\net8.0\Engine.dll</HintPath>
     </Reference>
   </ItemGroup>
   <Target Name="RestoreDotnetTools" BeforeTargets="Restore">
