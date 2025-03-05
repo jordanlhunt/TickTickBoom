@@ -47,6 +47,7 @@ namespace TickTickBoom
             PlayAnimation("idle");
             SetOriginToBottomCenter();
             isFacingLeft = false;
+            isGrounded = true;
         }
         #endregion
         #region Public Methods
@@ -57,18 +58,28 @@ namespace TickTickBoom
             {
                 isFacingLeft = true;
                 velocity.X = -WALKING_SPEED;
-                PlayAnimation("run");
+                if (isGrounded)
+                {
+                    PlayAnimation("run");
+                }
             }
             else if (inputHelper.IsKeyDown(Keys.Right) || inputHelper.IsKeyDown(Keys.D))
             {
                 isFacingLeft = false;
                 velocity.X = WALKING_SPEED;
-                PlayAnimation("run");
+                if (isGrounded)
+                {
+                    PlayAnimation("run");
+                }
+
             }
             else
             {
                 velocity.X = 0;
-                PlayAnimation("idle");
+                if (isGrounded)
+                {
+                    PlayAnimation("idle");
+                }
             }
             // Allow for jumping
             if (isGrounded && inputHelper.IsKeyPressed(Keys.Space))
@@ -82,9 +93,9 @@ namespace TickTickBoom
                 int fallSpriteIndex = 8;
                 PlayAnimation("jump", false, fallSpriteIndex);
             }
+
             SetOriginToBottomCenter();
             sprite.IsMirrored = isFacingLeft;
-
         }
         public void ApplyGravity(GameTime gameTime)
         {
