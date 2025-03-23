@@ -2,13 +2,11 @@
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Input;
 namespace TickTickBoom
-
 {
     class Player : AnimatedGameObject
     {
         #region Constants
         // Walking speed in pixels per second
-
         const string IDLE_ANIMATION_LOCATION = "Sprites/LevelObjects/Player/spr_idle";
         const string RUN_ANIMATION_LOCATION = "Sprites/LevelObjects/Player/spr_run@13";
         const string JUMP_ANIMATION_LOCATION = "Sprites/LevelObjects/Player/spr_jump@14";
@@ -22,7 +20,6 @@ namespace TickTickBoom
         const float CELEBRATE_ANIMATION_FRAMETIME = .05f;
         const float DIE_ANIMATION_FRAMETIME = .1f;
         const float EXPLODE_ANIMATION_FRAMETIME = .04f;
-
         const float JUMP_SPEED = 900.0f;
         const float GRAVITY = 2300.0f;
         const float MAX_FALL_SPEED = 1200.0f;
@@ -31,10 +28,10 @@ namespace TickTickBoom
         // Flag to check if player is facing left or not
         bool isFacingLeft;
         bool isGrounded;
-
+        Level level;
         #endregion
         #region Constructor
-        public Player() : base(TickTickBoom.DEPTH_LAYER_LEVEL_PLAYER)
+        public Player(Level level) : base(TickTickBoom.DEPTH_LAYER_LEVEL_PLAYER)
         {
             // Load the Player's various Animations
             LoadAnimation(IDLE_ANIMATION_LOCATION, "idle", true, IDLE_ANIAMTION_FRAMETIME);
@@ -48,6 +45,7 @@ namespace TickTickBoom
             SetOriginToBottomCenter();
             isFacingLeft = false;
             isGrounded = true;
+            this.level = level;
         }
         #endregion
         #region Public Methods
@@ -71,7 +69,6 @@ namespace TickTickBoom
                 {
                     PlayAnimation("run");
                 }
-
             }
             else
             {
@@ -93,7 +90,6 @@ namespace TickTickBoom
                 int fallSpriteIndex = 8;
                 PlayAnimation("jump", false, fallSpriteIndex);
             }
-
             SetOriginToBottomCenter();
             sprite.IsMirrored = isFacingLeft;
         }
@@ -104,7 +100,6 @@ namespace TickTickBoom
             {
                 velocity.Y = MAX_FALL_SPEED;
             }
-
         }
         public override void Update(GameTime gameTime)
         {

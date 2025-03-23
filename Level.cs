@@ -1,5 +1,6 @@
 ﻿using Engine;
 using Microsoft.Xna.Framework;
+using System;
 using System.Collections.Generic;
 
 namespace TickTickBoom
@@ -24,6 +25,14 @@ namespace TickTickBoom
         {
             get;
             private set;
+        }
+        public Tile.TileType GetTileType(int x, int y)
+        {
+            return tiles[x, y].TypeOfTile;
+        }
+        public Point GetTileAtCoordinates(Vector2 position)
+        {
+            return new Point((int)Math.Floor(position.X / TileWidth), (int)Math.Floor(position.Y / TileHeight));
         }
         #endregion
 
