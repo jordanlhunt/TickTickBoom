@@ -37,6 +37,7 @@ namespace TickTickBoom
             {
                 tileType = Tile.TileType.Empty;
             }
+            tileType = tiles[x, y].TypeOfTile;
             return tileType;
         }
         public Point GetTileAtCoordinates(Vector2 position)

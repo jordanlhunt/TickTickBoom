@@ -140,6 +140,21 @@ namespace TickTickBoom
             {
                 for (int x = topLeftTile.X; x <= bottomRightTile.X; x++)
                 {
+                    Tile.TileType tileType = level.GetTileType(x, y);
+                    Vector2 tilePosition = level.GetCellPosition(x, y);
+                    Rectangle tileBounds = new Rectangle((int)tilePosition.X, (int)tilePosition.Y, Level.TileWidth, Level.TileHeight);
+                    if (tileType == Tile.TileType.Empty)
+                    {
+                        continue;
+                    }
+                    if ((tileType == Tile.TileType.Platform) && (localPosition.Y > tilePosition.Y) && (previousPosition.Y > tilePosition.Y))
+                    {
+                        continue;
+                    }
+                    if (!tileBounds.Intersects(boundingBox))
+                    {
+                        continue;
+                    }
 
                 }
             }
