@@ -132,6 +132,20 @@ namespace TickTickBoom
         private void HandleTileCollisions(Vector2 previousPosition)
         {
             isGrounded = false;
+            Rectangle boundingBox = BoundingBoxForCollisions;
+            Point topLeftTile = level.GetTileAtCoordinates(new Vector2(boundingBox.Left, boundingBox.Top)) - new Point(1, 1);
+            Point bottomRightTile = level.GetTileAtCoordinates(new Vector2(boundingBox.Right, boundingBox.Bottom)) + new Point(1, 1);
+            // Check for collisions
+            for (int y = topLeftTile.Y; y <= bottomRightTile.Y; y++)
+            {
+                for (int x = topLeftTile.X; x <= bottomRightTile.X; x++)
+                {
+
+                }
+            }
+
+
+
         }
         #endregion
     }

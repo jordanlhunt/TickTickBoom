@@ -28,7 +28,16 @@ namespace TickTickBoom
         }
         public Tile.TileType GetTileType(int x, int y)
         {
-            return tiles[x, y].TypeOfTile;
+            Tile.TileType tileType = Tile.TileType.Platform;
+            if (x < 0 || x >= tiles.GetLength(0))
+            {
+                tileType = Tile.TileType.Wall;
+            }
+            if (y < 0 || y >= tiles.GetLength(1))
+            {
+                tileType = Tile.TileType.Empty;
+            }
+            return tileType;
         }
         public Point GetTileAtCoordinates(Vector2 position)
         {
