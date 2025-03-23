@@ -1,7 +1,7 @@
-﻿using System.Collections.Generic;
-using System.IO;
-using Engine;
+﻿using Engine;
 using Microsoft.Xna.Framework;
+using System.Collections.Generic;
+using System.IO;
 
 namespace TickTickBoom
 {
@@ -123,7 +123,7 @@ namespace TickTickBoom
         }
         private void LoadPlayerCharacter(int x, int y)
         {
-            player = new Player();
+            player = new Player(this);
             player.LocalPosition = GetCellPosition(x, y) + new Vector2(TileWidth / 2, TileHeight);
             AddChild(player);
         }

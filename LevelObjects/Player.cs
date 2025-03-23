@@ -30,6 +30,19 @@ namespace TickTickBoom
         bool isGrounded;
         Level level;
         #endregion
+        #region Properties
+        Rectangle BoundingBoxForCollisions
+        {
+            get
+            {
+                Rectangle boundingBox = BoundingBox;
+                boundingBox.X += 20;
+                boundingBox.Width -= 40;
+                boundingBox.Height += 1;
+                return boundingBox;
+            }
+        }
+        #endregion
         #region Constructor
         public Player(Level level) : base(TickTickBoom.DEPTH_LAYER_LEVEL_PLAYER)
         {
@@ -103,14 +116,22 @@ namespace TickTickBoom
         }
         public override void Update(GameTime gameTime)
         {
+            Vector2 previousPosition = localPosition;
             ApplyGravity(gameTime);
             base.Update(gameTime);
+            HandleTileCollisions(previousPosition);
         }
+
+
         #endregion
         #region Private Methods
         private void SetOriginToBottomCenter()
         {
             Origin = new Vector2(sprite.Width / 2, sprite.Height);
+        }
+        private void HandleTileCollisions(Vector2 previousPosition)
+        {
+            isGrounded = false;
         }
         #endregion
     }
