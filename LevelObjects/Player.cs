@@ -121,8 +121,6 @@ namespace TickTickBoom
             base.Update(gameTime);
             HandleTileCollisions(previousPosition);
         }
-
-
         #endregion
         #region Private Methods
         private void SetOriginToBottomCenter()
@@ -135,7 +133,6 @@ namespace TickTickBoom
             Rectangle boundingBox = BoundingBoxForCollisions;
             Point topLeftTile = level.GetTileAtCoordinates(new Vector2(boundingBox.Left, boundingBox.Top)) - new Point(1, 1);
             Point bottomRightTile = level.GetTileAtCoordinates(new Vector2(boundingBox.Right, boundingBox.Bottom)) + new Point(1, 1);
-            // Check for collisions
             for (int y = topLeftTile.Y; y <= bottomRightTile.Y; y++)
             {
                 for (int x = topLeftTile.X; x <= bottomRightTile.X; x++)
@@ -168,12 +165,15 @@ namespace TickTickBoom
                     // Vertical collision
                     else
                     {
-                        if (velocity.Y >= 0 && boundingBox.Center.Y < tileBounds.Top)
+                        // Edge Case: Very close to edge of a tile
+                        if (velocity.Y >= 0 && boundingBox.Center.Y < tileBounds.Top && collisionOverlap.Width > 6)
                         {
                             isGrounded = true;
-                            velocity.Y = 0; localPosition.Y = tileBounds.Top;
+                            velocity.Y = 0;
+                            localPosition.Y = tileBounds.Top;
                         }
-                        else if (velocity.Y <= 0 && boundingBox.Center.Y > tileBounds.Bottom)
+                        // Edge Case: ceiling bumping head on edge of a tile
+                        else if (velocity.Y <= 0 && boundingBox.Center.Y > tileBounds.Bottom && collisionOverlap.Height > 2)
                         {
                             localPosition.Y = previousPosition.Y;
                             velocity.Y = 0;
