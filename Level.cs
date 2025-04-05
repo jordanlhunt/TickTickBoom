@@ -33,11 +33,15 @@ namespace TickTickBoom
             {
                 tileType = Tile.TileType.Wall;
             }
-            if (y < 0 || y >= tiles.GetLength(1))
+            else if (y < 0 || y >= tiles.GetLength(1))
             {
                 tileType = Tile.TileType.Empty;
             }
-            tileType = tiles[x, y].TypeOfTile;
+            else
+            {
+
+                tileType = tiles[x, y].TypeOfTile;
+            }
             return tileType;
         }
         public Point GetTileAtCoordinates(Vector2 position)

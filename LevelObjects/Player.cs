@@ -141,26 +141,46 @@ namespace TickTickBoom
                 for (int x = topLeftTile.X; x <= bottomRightTile.X; x++)
                 {
                     Tile.TileType tileType = level.GetTileType(x, y);
-                    Vector2 tilePosition = level.GetCellPosition(x, y);
-                    Rectangle tileBounds = new Rectangle((int)tilePosition.X, (int)tilePosition.Y, Level.TileWidth, Level.TileHeight);
                     if (tileType == Tile.TileType.Empty)
                     {
                         continue;
                     }
+                    Vector2 tilePosition = level.GetCellPosition(x, y);
                     if ((tileType == Tile.TileType.Platform) && (localPosition.Y > tilePosition.Y) && (previousPosition.Y > tilePosition.Y))
                     {
                         continue;
                     }
+                    Rectangle tileBounds = new Rectangle((int)tilePosition.X, (int)tilePosition.Y, Level.TileWidth, Level.TileHeight);
                     if (!tileBounds.Intersects(boundingBox))
                     {
                         continue;
                     }
-
+                    Rectangle collisionOverlap = CollisionDetection.CalculateIntersection(boundingBox, tileBounds);
+                    // Horizontal collision
+                    if (collisionOverlap.Width < collisionOverlap.Height)
+                    {
+                        if ((velocity.X >= 0 && boundingBox.Center.X < tileBounds.Left) || (velocity.X <= 0 && boundingBox.Center.X > tileBounds.Right))
+                        {
+                            localPosition.X = previousPosition.X;
+                            velocity.X = 0;
+                        }
+                    }
+                    // Vertical collision
+                    else
+                    {
+                        if (velocity.Y >= 0 && boundingBox.Center.Y < tileBounds.Top)
+                        {
+                            isGrounded = true;
+                            velocity.Y = 0; localPosition.Y = tileBounds.Top;
+                        }
+                        else if (velocity.Y <= 0 && boundingBox.Center.Y > tileBounds.Bottom)
+                        {
+                            localPosition.Y = previousPosition.Y;
+                            velocity.Y = 0;
+                        }
+                    }
                 }
             }
-
-
-
         }
         #endregion
     }
