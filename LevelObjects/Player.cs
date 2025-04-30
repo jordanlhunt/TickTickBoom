@@ -28,6 +28,8 @@ namespace TickTickBoom
         // Flag to check if player is facing left or not
         bool isFacingLeft;
         bool isGrounded;
+        bool isStandingOnIceTile;
+        bool isStandingOnHotTile;
         Level level;
         #endregion
         #region Properties
@@ -57,6 +59,8 @@ namespace TickTickBoom
             PlayAnimation("idle");
             SetOriginToBottomCenter();
             isFacingLeft = false;
+            isStandingOnHotTile = false;
+            isStandingOnIceTile = false;
             isGrounded = true;
             this.level = level;
         }
@@ -130,6 +134,8 @@ namespace TickTickBoom
         private void HandleTileCollisions(Vector2 previousPosition)
         {
             isGrounded = false;
+            isStandingOnHotTile = false;
+            isStandingOnIceTile = false;
             Rectangle boundingBox = BoundingBoxForCollisions;
             Point topLeftTile = level.GetTileAtCoordinates(new Vector2(boundingBox.Left, boundingBox.Top)) - new Point(1, 1);
             Point bottomRightTile = level.GetTileAtCoordinates(new Vector2(boundingBox.Right, boundingBox.Bottom)) + new Point(1, 1);
@@ -169,6 +175,15 @@ namespace TickTickBoom
                         if (velocity.Y >= 0 && boundingBox.Center.Y < tileBounds.Top && collisionOverlap.Width > 6)
                         {
                             isGrounded = true;
+                            Tile.SurfaceType surfaceType = level.GetSurfaceType(x, y);
+                            if (surfaceType == Tile.SurfaceType.Hot)
+                            {
+                                isStandingOnHotTile = true;
+                            }
+                            else if (surfaceType == Tile.SurfaceType.Ice)
+                            {
+                                isStandingOnIceTile = true;
+                            }
                             velocity.Y = 0;
                             localPosition.Y = tileBounds.Top;
                         }

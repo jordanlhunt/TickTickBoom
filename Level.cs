@@ -1,7 +1,8 @@
-﻿using Engine;
-using Microsoft.Xna.Framework;
-using System;
+﻿using System;
 using System.Collections.Generic;
+using Engine;
+using Microsoft.Xna.Framework;
+using SharpDX.Direct2D1.Effects;
 
 namespace TickTickBoom
 {
@@ -43,6 +44,22 @@ namespace TickTickBoom
                 tileType = tiles[x, y].TypeOfTile;
             }
             return tileType;
+        }
+        public Tile.SurfaceType GetSurfaceType(int x, int y)
+        {
+            Tile.SurfaceType surfaceType = Tile.SurfaceType.Normal;
+
+            // Check if coordinates are valid
+            if (x >= 0 && x < tiles.GetLength(0) && y >= 0 && y < tiles.GetLength(1))
+            {
+                // Update surfaceType only if the tile's surface is not Normal
+                if (tiles[x, y].Surface != Tile.SurfaceType.Normal)
+                {
+                    surfaceType = tiles[x, y].Surface;
+                }
+            }
+
+            return surfaceType;
         }
         public Point GetTileAtCoordinates(Vector2 position)
         {
