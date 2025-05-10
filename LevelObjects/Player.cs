@@ -15,7 +15,7 @@ namespace TickTickBoom
         const string DIE_ANIMATION_LOCATION = "Sprites/LevelObjects/Player/spr_die@5";
         const string EXPLODE_ANIMATION_LOCATION = "Sprites/LevelObjects/Player/spr_explode@5x5";
         const float WALKING_SPEED = 425.5f;
-        const float IDLE_ANIAMTION_FRAMETIME = .1f;
+        const float IDLE_ANIMATION_FRAMETIME = .1f;
         const float RUN_ANIMATION_FRAMETIME = .04f;
         const float JUMP_ANIMATION_FRAMETIME = .8f;
         const float CELEBRATE_ANIMATION_FRAMETIME = .05f;
@@ -54,7 +54,7 @@ namespace TickTickBoom
         public Player(Level level) : base(TickTickBoom.DEPTH_LAYER_LEVEL_PLAYER)
         {
             // Load the Player's various Animations
-            LoadAnimation(IDLE_ANIMATION_LOCATION, "idle", true, IDLE_ANIAMTION_FRAMETIME);
+            LoadAnimation(IDLE_ANIMATION_LOCATION, "idle", true, IDLE_ANIMATION_FRAMETIME);
             LoadAnimation(RUN_ANIMATION_LOCATION, "run", true, RUN_ANIMATION_FRAMETIME);
             LoadAnimation(JUMP_ANIMATION_LOCATION, "jump", false, JUMP_ANIMATION_FRAMETIME);
             LoadAnimation(CELEBRATION_ANIMATION_LOCATION, "celebrate", false, CELEBRATE_ANIMATION_FRAMETIME);
