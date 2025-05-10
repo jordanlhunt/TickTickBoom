@@ -1,4 +1,5 @@
-﻿using Engine;
+﻿using System;
+using Engine;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Input;
 namespace TickTickBoom
@@ -23,6 +24,9 @@ namespace TickTickBoom
         const float JUMP_SPEED = 900.0f;
         const float GRAVITY = 2300.0f;
         const float MAX_FALL_SPEED = 1200.0f;
+        const float ICE_FRICTION = 1;
+        const float NORMAL_FRICTION = 20;
+        const float AIR_FRICTION = 5;
         #endregion
         #region Member Variables
         // Flag to check if player is facing left or not
@@ -31,6 +35,7 @@ namespace TickTickBoom
         bool isStandingOnIceTile;
         bool isStandingOnHotTile;
         Level level;
+        float desiredHorizontalSpeed;
         #endregion
         #region Properties
         Rectangle BoundingBoxForCollisions
@@ -72,7 +77,7 @@ namespace TickTickBoom
             if (inputHelper.IsKeyDown(Keys.Left) || inputHelper.IsKeyDown(Keys.A))
             {
                 isFacingLeft = true;
-                velocity.X = -WALKING_SPEED;
+                desiredHorizontalSpeed = -WALKING_SPEED;
                 if (isGrounded)
                 {
                     PlayAnimation("run");
@@ -81,7 +86,7 @@ namespace TickTickBoom
             else if (inputHelper.IsKeyDown(Keys.Right) || inputHelper.IsKeyDown(Keys.D))
             {
                 isFacingLeft = false;
-                velocity.X = WALKING_SPEED;
+                desiredHorizontalSpeed = WALKING_SPEED;
                 if (isGrounded)
                 {
                     PlayAnimation("run");
@@ -89,7 +94,7 @@ namespace TickTickBoom
             }
             else
             {
-                velocity.X = 0;
+                desiredHorizontalSpeed = 0;
                 if (isGrounded)
                 {
                     PlayAnimation("idle");
@@ -120,7 +125,26 @@ namespace TickTickBoom
         }
         public override void Update(GameTime gameTime)
         {
+            float friction;
+            if (isStandingOnIceTile)
+            {
+                friction = ICE_FRICTION;
+            }
+            else if (isGrounded)
+            {
+                friction = NORMAL_FRICTION;
+            }
+            else
+            {
+                friction = AIR_FRICTION;
+            }
+            float velocityModifier = MathHelper.Clamp(friction * (float)gameTime.ElapsedGameTime.TotalSeconds, 0, 1);
             Vector2 previousPosition = localPosition;
+            velocity.X += (desiredHorizontalSpeed - velocity.X) * velocityModifier;
+            if (Math.Abs(velocity.X) < 1)
+            {
+                velocity.X = 0;
+            }
             ApplyGravity(gameTime);
             base.Update(gameTime);
             HandleTileCollisions(previousPosition);
