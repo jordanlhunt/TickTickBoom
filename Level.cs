@@ -65,6 +65,11 @@ namespace TickTickBoom
         {
             return new Point((int)Math.Floor(position.X / TileWidth), (int)Math.Floor(position.Y / TileHeight));
         }
+
+        public Rectangle BoundingBox()
+        {
+            return new Rectangle(0, 0, tiles.GetLength(0) * TileWidth, tiles.GetLength(1) * TileHeight);
+        }
         #endregion
 
         #region Constructor

@@ -149,6 +149,11 @@ namespace TickTickBoom
             base.Update(gameTime);
             HandleTileCollisions(previousPosition);
         }
+
+        public void Die()
+        {
+
+        }
         #endregion
         #region Private Methods
         private void SetOriginToBottomCenter()

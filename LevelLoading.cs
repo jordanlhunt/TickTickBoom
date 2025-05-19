@@ -1,7 +1,7 @@
-﻿using Engine;
-using Microsoft.Xna.Framework;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.IO;
+using Engine;
+using Microsoft.Xna.Framework;
 
 namespace TickTickBoom
 {
@@ -143,6 +143,11 @@ namespace TickTickBoom
             waterDrop.LocalPosition = GetCellPosition(x, y) + new Vector2(TileWidth / 2, TileHeight / 3);
             AddChild(waterDrop);
             waterDrops.Add(waterDrop);
+        }
+
+        private void LoadRocketEnemy(int x, int y)
+        {
+            Rocket rocket = new Rocket(this, GetCellPosition(x, y), x != 0);
         }
 
         #endregion
