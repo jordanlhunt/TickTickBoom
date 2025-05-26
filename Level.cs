@@ -27,6 +27,11 @@ namespace TickTickBoom
             get;
             private set;
         }
+        public Player Player
+        {
+            get;
+            private set;
+        }
         public Tile.TileType GetTileType(int x, int y)
         {
             Tile.TileType tileType = Tile.TileType.Platform;
@@ -66,9 +71,12 @@ namespace TickTickBoom
             return new Point((int)Math.Floor(position.X / TileWidth), (int)Math.Floor(position.Y / TileHeight));
         }
 
-        public Rectangle BoundingBox()
+        public Rectangle BoundingBox
         {
-            return new Rectangle(0, 0, tiles.GetLength(0) * TileWidth, tiles.GetLength(1) * TileHeight);
+            get
+            {
+                return new Rectangle(0, 0, tiles.GetLength(0) * TileWidth, tiles.GetLength(1) * TileHeight);
+            }
         }
         #endregion
 

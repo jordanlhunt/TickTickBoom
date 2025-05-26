@@ -152,7 +152,7 @@ namespace TickTickBoom
 
         public void Die()
         {
-
+            Console.WriteLine("[PLAYER.CS] - Player.Die() has been called");
         }
         #endregion
         #region Private Methods

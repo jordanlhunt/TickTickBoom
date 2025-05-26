@@ -102,6 +102,10 @@ namespace TickTickBoom
             {
                 LoadWaterDrop(x, y);
             }
+            else if (symbolToInsert == 'R')
+            {
+                LoadRocketEnemy(x, y);
+            }
         }
         private Tile CharToStaticTile(char symbol)
         {
@@ -123,9 +127,9 @@ namespace TickTickBoom
         }
         private void LoadPlayerCharacter(int x, int y)
         {
-            player = new Player(this);
-            player.LocalPosition = GetCellPosition(x, y) + new Vector2(TileWidth / 2, TileHeight);
-            AddChild(player);
+            Player = new Player(this);
+            Player.LocalPosition = GetCellPosition(x, y) + new Vector2(TileWidth / 2, TileHeight);
+            AddChild(Player);
         }
         private void LoadGoal(int x, int y)
         {
@@ -148,6 +152,7 @@ namespace TickTickBoom
         private void LoadRocketEnemy(int x, int y)
         {
             Rocket rocket = new Rocket(this, GetCellPosition(x, y), x != 0);
+            AddChild(rocket);
         }
 
         #endregion
