@@ -17,7 +17,7 @@ namespace TickTickBoom
         const float WALKING_SPEED = 425.5f;
         const float IDLE_ANIMATION_FRAMETIME = .1f;
         const float RUN_ANIMATION_FRAMETIME = .04f;
-        const float JUMP_ANIMATION_FRAMETIME = .8f;
+        const float JUMP_ANIMATION_FRAMETIME = .08f;
         const float CELEBRATE_ANIMATION_FRAMETIME = .05f;
         const float DIE_ANIMATION_FRAMETIME = .1f;
         const float EXPLODE_ANIMATION_FRAMETIME = .04f;
@@ -111,10 +111,8 @@ namespace TickTickBoom
             // Allow for jumping
             if (isGrounded && inputHelper.IsKeyPressed(Keys.Space))
             {
-                velocity.Y = -JUMP_SPEED;
-                PlayAnimation("jump");
+                Jump();
             }
-            // Show the falling animation
             if (!isGrounded)
             {
                 int fallSpriteIndex = 8;
@@ -156,6 +154,7 @@ namespace TickTickBoom
             ApplyGravity(gameTime);
             base.Update(gameTime);
             HandleTileCollisions(previousPosition);
+
         }
 
         public void Die()
