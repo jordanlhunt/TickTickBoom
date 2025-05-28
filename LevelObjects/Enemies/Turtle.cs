@@ -12,7 +12,7 @@ class Turtle : AnimatedGameObject
     float timer;
     const float SPEED = 245.0f;
     const float ANIMATION_SWITCH_DURATION = 5.0f;
-    const float BOUNCE_VELOCITY = 1500.0f;
+    const float BOUNCE_VELOCITY = 1800.0f;
     const string TURTLE_IDLE_SPRITE_LOCATION = "Sprites/LevelObjects/Turtle/spr_idle";
     const string TURTLE_SNEEZE_SPRITE_LOCATION = "Sprites/LevelObjects/Turtle/spr_sneeze@9";
     const string TURTLE_IDLE_ANIMATION_ID = "idle";
@@ -85,7 +85,7 @@ class Turtle : AnimatedGameObject
         {
             player.Die();
         }
-        if (HasPixelPreciseCollision(player) && player.IsFalling)
+        else if (HasPixelPreciseCollision(player) && player.IsFalling)
         {
             player.Jump(BOUNCE_VELOCITY);
         }
