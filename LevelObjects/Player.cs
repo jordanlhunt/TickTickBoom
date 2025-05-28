@@ -49,6 +49,14 @@ namespace TickTickBoom
                 return boundingBox;
             }
         }
+
+        public bool IsFalling
+        {
+            get
+            {
+                return velocity.Y > 0 && !isGrounded;
+            }
+        }
         #endregion
         #region Constructor
         public Player(Level level) : base(TickTickBoom.DEPTH_LAYER_LEVEL_PLAYER)
@@ -154,6 +162,12 @@ namespace TickTickBoom
         {
             Console.WriteLine("[PLAYER.CS] - Player.Die() has been called");
         }
+
+        public void Jump(float speed = JUMP_SPEED)
+        {
+            velocity.Y -= speed;
+            PlayAnimation("jump");
+        }
         #endregion
         #region Private Methods
         private void SetOriginToBottomCenter()
@@ -226,6 +240,7 @@ namespace TickTickBoom
                 }
             }
         }
+
         #endregion
     }
 }

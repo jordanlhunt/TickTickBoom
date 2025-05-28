@@ -100,5 +100,12 @@ namespace TickTickBoom
             return new Vector2(x * TileWidth, y * TileHeight);
         }
         #endregion
+
+        #region Private Methods
+        private Vector2 GetCellBottomCenter(int x, int y)
+        {
+            return GetCellPosition(x, y + 1) + new Vector2(TileWidth / 2, 0);
+        }
+        #endregion
     }
 }

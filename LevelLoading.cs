@@ -106,6 +106,10 @@ namespace TickTickBoom
             {
                 LoadRocketEnemy(x, y);
             }
+            else if (symbolToInsert == 'T')
+            {
+                LoadTurtleEnemy(x, y);
+            }
         }
         private Tile CharToStaticTile(char symbol)
         {
@@ -153,6 +157,13 @@ namespace TickTickBoom
         {
             Rocket rocket = new Rocket(this, GetCellPosition(x, y), x != 0);
             AddChild(rocket);
+        }
+
+        private void LoadTurtleEnemy(int x, int y)
+        {
+            Turtle turtle = new Turtle(this);
+            turtle.LocalPosition = GetCellBottomCenter(x, y);
+            AddChild(turtle);
         }
 
         #endregion
