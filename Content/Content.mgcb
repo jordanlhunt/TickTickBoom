@@ -282,7 +282,8 @@
 /processorParam:TextureFormat=Color
 /build:Sprites/LevelObjects/Rocket/spr_rocket@3.png
 
-#begin Sprites/LevelObjects/Spark/spr_idle.png
+
+#begin Sprites/LevelObjects/Sparky/spr_electrocute.png
 /importer:TextureImporter
 /processor:TextureProcessor
 /processorParam:ColorKeyColor=255,0,255,255
@@ -292,7 +293,31 @@
 /processorParam:ResizeToPowerOfTwo=False
 /processorParam:MakeSquare=False
 /processorParam:TextureFormat=Color
-/build:Sprites/LevelObjects/Spark/spr_idle.png
+/build:Sprites/LevelObjects/Sparky/spr_electrocute.png
+
+#begin Sprites/LevelObjects/Sparky/spr_electrocute@6x5.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:Sprites/LevelObjects/Sparky/spr_electrocute@6x5.png
+
+#begin Sprites/LevelObjects/Sparky/spr_idle.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:Sprites/LevelObjects/Sparky/spr_idle.png
 
 #begin Sprites/LevelObjects/spr_goal.png
 /importer:TextureImporter

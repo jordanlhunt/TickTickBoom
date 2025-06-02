@@ -1,6 +1,5 @@
-using System.Numerics;
-using System.Windows.Forms;
 using Engine;
+using Microsoft.Xna.Framework;
 namespace TickTickBoom;
 
 class Turtle : AnimatedGameObject
@@ -54,7 +53,7 @@ class Turtle : AnimatedGameObject
         Origin = new Vector2(sprite.Width / 2, 120);
     }
 
-    public override void Update(Microsoft.Xna.Framework.GameTime gameTime)
+    public override void Update(GameTime gameTime)
     {
         base.Update(gameTime);
 

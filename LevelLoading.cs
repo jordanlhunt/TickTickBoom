@@ -110,6 +110,10 @@ namespace TickTickBoom
             {
                 LoadTurtleEnemy(x, y);
             }
+            else if (symbolToInsert == 'S')
+            {
+                LoadSparkyEnemy(x, y);
+            }
         }
         private Tile CharToStaticTile(char symbol)
         {
@@ -164,6 +168,12 @@ namespace TickTickBoom
             Turtle turtle = new Turtle(this);
             turtle.LocalPosition = GetCellBottomCenter(x, y);
             AddChild(turtle);
+        }
+
+        private void LoadSparkyEnemy(int x, int y)
+        {
+            Sparky sparky = new Sparky(this, GetCellBottomCenter(x, y));
+            AddChild(sparky);
         }
 
         #endregion
