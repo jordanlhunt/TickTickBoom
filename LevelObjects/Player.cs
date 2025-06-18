@@ -57,6 +57,13 @@ namespace TickTickBoom
                 return velocity.Y > 0 && !isGrounded;
             }
         }
+        public bool IsMoving
+        {
+            get
+            {
+                return velocity != Vector2.Zero;
+            }
+        }
         #endregion
         #region Constructor
         public Player(Level level) : base(TickTickBoom.DEPTH_LAYER_LEVEL_PLAYER)

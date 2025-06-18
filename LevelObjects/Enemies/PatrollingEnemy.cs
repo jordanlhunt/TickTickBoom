@@ -1,4 +1,3 @@
-using System.Threading;
 using Engine;
 using Microsoft.Xna.Framework;
 namespace TickTickBoom;

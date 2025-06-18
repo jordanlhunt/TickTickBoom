@@ -78,6 +78,8 @@ namespace TickTickBoom
                 return new Rectangle(0, 0, tiles.GetLength(0) * TileWidth, tiles.GetLength(1) * TileHeight);
             }
         }
+
+
         #endregion
 
         #region Constructor
