@@ -60,7 +60,7 @@ namespace TickTickBoom
         {
             // Create a parent object for everything
             GameObjectList playField = new GameObjectList();
-            // initalize the list of water drops
+            // initialize the list of water drops
             waterDrops = new List<Waterdrop>();
             // prepare for grid array
             tiles = new Tile[gridWidth, gridHeight];
@@ -114,6 +114,10 @@ namespace TickTickBoom
             {
                 LoadSparkyEnemy(x, y);
             }
+            else if (symbolToInsert == 'A' || symbolToInsert == 'B' || symbolToInsert == 'C')
+            {
+                LoadFlameEnemy(x, y, symbolToInsert);
+            }
         }
         private Tile CharToStaticTile(char symbol)
         {
@@ -151,7 +155,7 @@ namespace TickTickBoom
         private void LoadWaterDrop(int x, int y)
         {
             // Create the water drop
-            Waterdrop waterDrop = new Waterdrop();
+            Waterdrop waterDrop = new Waterdrop(this);
             waterDrop.LocalPosition = GetCellPosition(x, y) + new Vector2(TileWidth / 2, TileHeight / 3);
             AddChild(waterDrop);
             waterDrops.Add(waterDrop);
@@ -174,6 +178,25 @@ namespace TickTickBoom
         {
             Sparky sparky = new Sparky(this, GetCellBottomCenter(x, y));
             AddChild(sparky);
+        }
+
+        private void LoadFlameEnemy(int x, int y, char loadSymbol)
+        {
+            Vector2 position = GetCellBottomCenter(x, y);
+            PatrollingEnemy enemy;
+            if (loadSymbol == 'A')
+            {
+                enemy = new PatrollingEnemy(this, position);
+            }
+            else if (loadSymbol == 'B')
+            {
+                enemy = new PlayerFollowingEnemy(this, position);
+            }
+            else
+            {
+                enemy = new UnpredictableEnemy(this, position);
+            }
+            AddChild(enemy);
         }
 
         #endregion

@@ -31,10 +31,10 @@ class PatrollingEnemy : AnimatedGameObject
         waitTime = 0;
         velocity.X = WALK_SPEED;
         PlayAnimation(PATROLLING_ENEMY_DEFAULT_ANIMATION_ID);
+        sprite.IsMirrored = false;
         // Go to start position
         localPosition = startingPosition;
         Origin = new Vector2(sprite.Width / 2, sprite.Height);
-        base.Reset();
     }
     public override void Update(GameTime gameTime)
     {
@@ -48,19 +48,20 @@ class PatrollingEnemy : AnimatedGameObject
             {
                 TurnAround();
             }
-            // If unable to move forward begin to wait
-            else if (!IsAbleToMoveForward())
-            {
-                waitTime = MAX_WAIT_TIME;
-                velocity.X = 0;
-            }
-            // A collision with a player kills player
-            if (HasPixelPreciseCollision(level.Player))
-            {
-                level.Player.Die();
-            }
+        }
+        // If unable to move forward begin to wait
+        else if (!IsAbleToMoveForward())
+        {
+            waitTime = MAX_WAIT_TIME;
+            velocity.X = 0;
+        }
+        // A collision with a player kills player
+        if (HasPixelPreciseCollision(level.Player))
+        {
+            level.Player.Die();
         }
     }
+
 
     protected bool IsAbleToMoveForward()
     {

@@ -30,4 +30,5 @@ class UnpredictableEnemy : PatrollingEnemy
             velocity.X = Math.Sign(velocity.X) * newRandomSpeed;
         }
     }
+    #endregion
 }
