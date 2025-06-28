@@ -1,8 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using Engine;
+﻿using Engine;
 using Microsoft.Xna.Framework;
-using SharpDX.Direct2D1.Effects;
+using System;
+using System.Collections.Generic;
 
 namespace TickTickBoom
 {
@@ -19,6 +18,9 @@ namespace TickTickBoom
         List<Waterdrop> waterDrops;
         SpriteGameObject goal;
         Player player;
+
+        bool isLevelComplete;
+        // BombTimer bombTimer;
         #endregion
 
         #region Properties
@@ -79,6 +81,21 @@ namespace TickTickBoom
             }
         }
 
+        public Boolean IsAllDropsCollected
+        {
+            get
+            {
+                bool isWaterdropsVisable = true;
+                foreach (Waterdrop waterdrop in waterDrops)
+                {
+                    if (waterdrop.IsVisible)
+                    {
+                        isWaterdropsVisable = false;
+                    }
+                }
+                return isWaterdropsVisable;
+            }
+        }
 
         #endregion
 
@@ -93,6 +110,7 @@ namespace TickTickBoom
             backgrounds.AddChild(backgroundSky);
             AddChild(backgroundSky);
             LoadLevelFromFile(fileName);
+            isLevelComplete = false;
         }
         #endregion
 
@@ -100,6 +118,26 @@ namespace TickTickBoom
         public Vector2 GetCellPosition(int x, int y)
         {
             return new Vector2(x * TileWidth, y * TileHeight);
+        }
+
+        public override void Update(GameTime gameTime)
+        {
+            base.Update(gameTime);
+
+            // Check if the level is completed
+            if (isLevelComplete == false && IsAllDropsCollected == true && Player.HasPixelPreciseCollision(goal))
+            {
+                isLevelComplete = true;
+                ExtendedGameWithLevels.GetPlayingState().LevelCompleted(LevelIndex);
+                Player.Celebrate();
+                // bombTimer.IsRunning = false;
+            }
+        }
+
+        public override void Reset()
+        {
+            base.Reset();
+            isLevelComplete = false;
         }
         #endregion
 

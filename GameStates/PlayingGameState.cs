@@ -82,7 +82,7 @@ namespace TickTickBoom
             completedOverlay.IsVisible = false;
             gameOverlay.IsVisible = false;
         }
-        public void LevelCompelted(int levelIndex)
+        public void LevelCompleted(int levelIndex)
         {
             // show the completed overlay
             completedOverlay.IsVisible = true;

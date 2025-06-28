@@ -34,6 +34,7 @@ namespace TickTickBoom
         bool isGrounded;
         bool isStandingOnIceTile;
         bool isStandingOnHotTile;
+        private bool isCelebrating;
         Level level;
         float desiredHorizontalSpeed;
         #endregion
@@ -49,7 +50,6 @@ namespace TickTickBoom
                 return boundingBox;
             }
         }
-
         public bool IsFalling
         {
             get
@@ -78,6 +78,7 @@ namespace TickTickBoom
             // Start with Idle animation
             PlayAnimation("idle");
             SetOriginToBottomCenter();
+            isCelebrating = false;
             isFacingLeft = false;
             isStandingOnHotTile = false;
             isStandingOnIceTile = false;
@@ -138,37 +139,38 @@ namespace TickTickBoom
         }
         public override void Update(GameTime gameTime)
         {
-            float friction;
-            if (isStandingOnIceTile)
+            Vector2 previousPosition = localPosition;
+            if (isCelebrating == false)
             {
-                friction = ICE_FRICTION;
-            }
-            else if (isGrounded)
-            {
-                friction = NORMAL_FRICTION;
+                ApplyFriction(gameTime);
+                float friction = ApplyFriction(gameTime);
+                float velocityModifier = MathHelper.Clamp(friction * (float)gameTime.ElapsedGameTime.TotalSeconds, 0, 1);
+                velocity.X += (desiredHorizontalSpeed - velocity.X) * velocityModifier;
+                if (Math.Abs(velocity.X) < 1)
+                {
+                    velocity.X = 0;
+                }
             }
             else
-            {
-                friction = AIR_FRICTION;
-            }
-            float velocityModifier = MathHelper.Clamp(friction * (float)gameTime.ElapsedGameTime.TotalSeconds, 0, 1);
-            Vector2 previousPosition = localPosition;
-            velocity.X += (desiredHorizontalSpeed - velocity.X) * velocityModifier;
-            if (Math.Abs(velocity.X) < 1)
             {
                 velocity.X = 0;
             }
             ApplyGravity(gameTime);
             base.Update(gameTime);
             HandleTileCollisions(previousPosition);
-
         }
-
+        public void Celebrate()
+        {
+            isCelebrating = true;
+            PlayAnimation("celebrate");
+            SetOriginToBottomCenter();
+            // Stop Moving
+            velocity = Vector2.Zero;
+        }
         public void Die()
         {
             Console.WriteLine("[PLAYER.CS] - Player.Die() has been called");
         }
-
         public void Jump(float speed = JUMP_SPEED)
         {
             velocity.Y -= speed;
@@ -246,7 +248,23 @@ namespace TickTickBoom
                 }
             }
         }
-
+        public float ApplyFriction(GameTime gameTime)
+        {
+            float friction;
+            if (isStandingOnIceTile)
+            {
+                friction = ICE_FRICTION;
+            }
+            else if (isGrounded)
+            {
+                friction = NORMAL_FRICTION;
+            }
+            else
+            {
+                friction = AIR_FRICTION;
+            }
+            return friction;
+        }
         #endregion
     }
 }
