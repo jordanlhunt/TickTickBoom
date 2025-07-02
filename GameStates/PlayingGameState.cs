@@ -3,6 +3,7 @@ using Engine.UI;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
+using System;
 namespace TickTickBoom
 {
     class PlayingGameState : GameState, IPlayingState
@@ -33,7 +34,6 @@ namespace TickTickBoom
             gameOverlay = AddOverlay(GAME_OVER_LOCATION);
         }
         #endregion
-
         #region Public Methods
         public override void HandleInput(InputHelper inputHelper)
         {
@@ -45,6 +45,7 @@ namespace TickTickBoom
                 {
                     if (inputHelper.IsKeyPressed(Keys.Space))
                     {
+                        Console.Write("[PlayingStateState.cs] - HandleInput() - Space bar has been pressed");
                         ExtendedGameWithLevels.GoToNextLevel(level.LevelIndex);
                     }
                 }
@@ -101,7 +102,6 @@ namespace TickTickBoom
             gameObjectList.AddChild(overlay);
             return overlay;
         }
-
         #endregion
     }
 }

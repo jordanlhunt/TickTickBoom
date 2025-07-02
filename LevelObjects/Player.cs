@@ -64,6 +64,19 @@ namespace TickTickBoom
                 return velocity != Vector2.Zero;
             }
         }
+
+        public bool IsAlive
+        {
+            get;
+            private set;
+        }
+        public bool CanCollideWithObjects
+        {
+            get
+            {
+                return IsAlive && !isCelebrating;
+            }
+        }
         #endregion
         #region Constructor
         public Player(Level level) : base(TickTickBoom.DEPTH_LAYER_LEVEL_PLAYER)
@@ -82,6 +95,7 @@ namespace TickTickBoom
             isFacingLeft = false;
             isStandingOnHotTile = false;
             isStandingOnIceTile = false;
+            IsAlive = true;
             isGrounded = true;
             this.level = level;
         }
@@ -89,6 +103,10 @@ namespace TickTickBoom
         #region Public Methods
         public override void HandleInput(InputHelper inputHelper)
         {
+            if (!CanCollideWithObjects)
+            {
+                return;
+            }
             // Arrow keys: move left and right 
             if (inputHelper.IsKeyDown(Keys.Left) || inputHelper.IsKeyDown(Keys.A))
             {
@@ -142,13 +160,16 @@ namespace TickTickBoom
             Vector2 previousPosition = localPosition;
             if (isCelebrating == false)
             {
-                ApplyFriction(gameTime);
-                float friction = ApplyFriction(gameTime);
-                float velocityModifier = MathHelper.Clamp(friction * (float)gameTime.ElapsedGameTime.TotalSeconds, 0, 1);
-                velocity.X += (desiredHorizontalSpeed - velocity.X) * velocityModifier;
-                if (Math.Abs(velocity.X) < 1)
+                if (CanCollideWithObjects)
                 {
-                    velocity.X = 0;
+                    ApplyFriction(gameTime);
+                    float friction = ApplyFriction(gameTime);
+                    float velocityModifier = MathHelper.Clamp(friction * (float)gameTime.ElapsedGameTime.TotalSeconds, 0, 1);
+                    velocity.X += (desiredHorizontalSpeed - velocity.X) * velocityModifier;
+                    if (Math.Abs(velocity.X) < 1)
+                    {
+                        velocity.X = 0;
+                    }
                 }
             }
             else
@@ -157,7 +178,11 @@ namespace TickTickBoom
             }
             ApplyGravity(gameTime);
             base.Update(gameTime);
-            HandleTileCollisions(previousPosition);
+            // Only do the Tile Collision if the player is alive
+            if (IsAlive)
+            {
+                HandleTileCollisions(previousPosition);
+            }
         }
         public void Celebrate()
         {
@@ -169,7 +194,9 @@ namespace TickTickBoom
         }
         public void Die()
         {
-            Console.WriteLine("[PLAYER.CS] - Player.Die() has been called");
+            IsAlive = false;
+            PlayAnimation("die");
+            velocity = new Vector2(0, -JUMP_SPEED);
         }
         public void Jump(float speed = JUMP_SPEED)
         {
