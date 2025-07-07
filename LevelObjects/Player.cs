@@ -32,11 +32,12 @@ namespace TickTickBoom
         // Flag to check if player is facing left or not
         bool isFacingLeft;
         bool isGrounded;
-        bool isStandingOnIceTile;
-        bool isStandingOnHotTile;
+        private bool isStandingOnIceTile;
+        private bool isStandingOnHotTile;
         private bool isCelebrating;
         Level level;
         float desiredHorizontalSpeed;
+        Vector2 startingPosition;
         #endregion
         #region Properties
         Rectangle BoundingBoxForCollisions
@@ -64,7 +65,6 @@ namespace TickTickBoom
                 return velocity != Vector2.Zero;
             }
         }
-
         public bool IsAlive
         {
             get;
@@ -79,7 +79,7 @@ namespace TickTickBoom
         }
         #endregion
         #region Constructor
-        public Player(Level level) : base(TickTickBoom.DEPTH_LAYER_LEVEL_PLAYER)
+        public Player(Level level, Vector2 startingPosition) : base(TickTickBoom.DEPTH_LAYER_LEVEL_PLAYER)
         {
             // Load the Player's various Animations
             LoadAnimation(IDLE_ANIMATION_LOCATION, "idle", true, IDLE_ANIMATION_FRAMETIME);
@@ -88,16 +88,9 @@ namespace TickTickBoom
             LoadAnimation(CELEBRATION_ANIMATION_LOCATION, "celebrate", false, CELEBRATE_ANIMATION_FRAMETIME);
             LoadAnimation(DIE_ANIMATION_LOCATION, "die", true, DIE_ANIMATION_FRAMETIME);
             LoadAnimation(EXPLODE_ANIMATION_LOCATION, "explode", false, EXPLODE_ANIMATION_FRAMETIME);
-            // Start with Idle animation
-            PlayAnimation("idle");
-            SetOriginToBottomCenter();
-            isCelebrating = false;
-            isFacingLeft = false;
-            isStandingOnHotTile = false;
-            isStandingOnIceTile = false;
-            IsAlive = true;
-            isGrounded = true;
+            this.startingPosition = startingPosition;
             this.level = level;
+            Reset();
         }
         #endregion
         #region Public Methods
@@ -182,6 +175,19 @@ namespace TickTickBoom
             if (IsAlive)
             {
                 HandleTileCollisions(previousPosition);
+                // check if we've fallen down through the level
+                if (BoundingBox.Center.Y > level.BoundingBox.Bottom)
+                {
+                    Die();
+                }
+                // if (isStandingOnHotTile)
+                // {
+                //     level.Timer.Multiplier = 2;
+                // }
+                // else
+                // {
+                //     level.Timer.Multiplier = 1;
+                // }
             }
         }
         public void Celebrate()
@@ -291,6 +297,21 @@ namespace TickTickBoom
                 friction = AIR_FRICTION;
             }
             return friction;
+        }
+        public override void Reset()
+        {
+            localPosition = startingPosition;
+            velocity = Vector2.Zero;
+            desiredHorizontalSpeed = 0;
+            // Start with idle sprite
+            PlayAnimation("idle", true);
+            SetOriginToBottomCenter();
+            isCelebrating = false;
+            isFacingLeft = false;
+            isStandingOnHotTile = false;
+            isStandingOnIceTile = false;
+            IsAlive = true;
+            isGrounded = true;
         }
         #endregion
     }

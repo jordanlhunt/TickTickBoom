@@ -1,9 +1,11 @@
-﻿using Engine;
+﻿using System;
+using System.Diagnostics.Eventing.Reader;
+using System.Runtime.CompilerServices;
+using Engine;
 using Engine.UI;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
-using System;
 namespace TickTickBoom
 {
     class PlayingGameState : GameState, IPlayingState
@@ -12,7 +14,7 @@ namespace TickTickBoom
         Level level;
         Button quitButton;
         SpriteGameObject completedOverlay;
-        SpriteGameObject gameOverlay;
+        SpriteGameObject gameOverOverlay;
         const int QUIT_BUTTON_X = 1290;
         const int QUIT_BUTTON_Y = 20;
         const int OVERLAY_X = 720;
@@ -31,7 +33,7 @@ namespace TickTickBoom
             gameObjectList.AddChild(quitButton);
             // add overlay images
             completedOverlay = AddOverlay(WELL_DONE_LOCATION);
-            gameOverlay = AddOverlay(GAME_OVER_LOCATION);
+            gameOverOverlay = AddOverlay(GAME_OVER_LOCATION);
         }
         #endregion
         #region Public Methods
@@ -40,15 +42,26 @@ namespace TickTickBoom
             base.HandleInput(inputHelper);
             if (level != null)
             {
-                // if the "completed" overlay is visible. Pressing the spacebar should send the player to the next level
-                if (completedOverlay.IsVisible)
+                if (!level.Player.IsAlive)
                 {
                     if (inputHelper.IsKeyPressed(Keys.Space))
                     {
-                        Console.Write("[PlayingStateState.cs] - HandleInput() - Space bar has been pressed");
+                        level.Reset();
+                    }
+                }
+                else if (inputHelper.IsKeyPressed(Keys.OemTilde))
+                {
+                    level.Reset();
+                }
+                // if the "completed" overlay is visible. Pressing the spacebar should send the player to the next level
+                else if (completedOverlay.IsVisible)
+                {
+                    if (inputHelper.IsKeyPressed(Keys.Space))
+                    {
                         ExtendedGameWithLevels.GoToNextLevel(level.LevelIndex);
                     }
                 }
+
                 // Else update the level itself and check for button presses
                 else
                 {
@@ -75,13 +88,15 @@ namespace TickTickBoom
             {
                 level.Draw(gameTime, spriteBatch);
             }
+            // show or hide the "game over" image
+            gameOverOverlay.IsVisible = !level.Player.IsAlive;
         }
         public void LoadLevel(int levelIndex)
         {
             level = new Level(levelIndex, ExtendedGame.ContentRootDirectory + "/Levels/level" + levelIndex + ".txt");
             // Hide the overlay images
             completedOverlay.IsVisible = false;
-            gameOverlay.IsVisible = false;
+            gameOverOverlay.IsVisible = false;
         }
         public void LevelCompleted(int levelIndex)
         {

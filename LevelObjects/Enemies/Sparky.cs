@@ -74,7 +74,7 @@ class Sparky : AnimatedGameObject
             {
                 Reset();
             }
-            if (IsDeadly && HasPixelPreciseCollision(level.Player))
+            if (IsDeadly && HasPixelPreciseCollision(level.Player) && level.Player.CanCollideWithObjects)
             {
                 level.Player.Die();
             }

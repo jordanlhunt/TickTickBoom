@@ -17,7 +17,7 @@ class PlayerFollowingEnemy : PatrollingEnemy
     {
         base.Update(gameTime);
         // Check if the player is moving, and if the enemy is not already waiting
-        if (level.Player.IsMoving && velocity.X != 0)
+        if (level.Player.IsMoving && velocity.X != 0 && level.Player.CanCollideWithObjects)
         {
             float deltaX = level.Player.GlobalPosition.X - GlobalPosition.X;
             if (Math.Sign(deltaX) != Math.Sign(velocity.X) && Math.Abs(deltaX) > 100)

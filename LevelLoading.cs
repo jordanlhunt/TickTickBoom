@@ -139,7 +139,8 @@ namespace TickTickBoom
         }
         private void LoadPlayerCharacter(int x, int y)
         {
-            Player = new Player(this);
+            Vector2 startingPosition = GetCellPosition(x, y) + new Vector2(TileWidth / 2, TileHeight);
+            Player = new Player(this, startingPosition);
             Player.LocalPosition = GetCellPosition(x, y) + new Vector2(TileWidth / 2, TileHeight);
             AddChild(Player);
         }
@@ -155,8 +156,8 @@ namespace TickTickBoom
         private void LoadWaterDrop(int x, int y)
         {
             // Create the water drop
-            Waterdrop waterDrop = new Waterdrop(this);
-            waterDrop.LocalPosition = GetCellPosition(x, y) + new Vector2(TileWidth / 2, TileHeight / 3);
+            Vector2 startingPosition = GetCellPosition(x, y) + new Vector2(TileWidth / 2, TileHeight / 3);
+            Waterdrop waterDrop = new Waterdrop(this, startingPosition);
             AddChild(waterDrop);
             waterDrops.Add(waterDrop);
         }

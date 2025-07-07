@@ -58,7 +58,7 @@ class Rocket : AnimatedGameObject
             Reset();
         }
         // If the player hits the player then the player dies
-        if (HasPixelPreciseCollision(level.Player))
+        if (HasPixelPreciseCollision(level.Player) && level.Player.CanCollideWithObjects)
         {
             level.Player.Die();
         }

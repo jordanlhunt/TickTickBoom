@@ -56,7 +56,7 @@ class PatrollingEnemy : AnimatedGameObject
             velocity.X = 0;
         }
         // A collision with a player kills player
-        if (HasPixelPreciseCollision(level.Player))
+        if (HasPixelPreciseCollision(level.Player) && level.Player.CanCollideWithObjects)
         {
             level.Player.Die();
         }

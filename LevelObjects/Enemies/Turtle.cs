@@ -80,7 +80,7 @@ class Turtle : AnimatedGameObject
     public void CollisionCheck(Player player)
     {
         // If collision with player is true
-        if (HasPixelPreciseCollision(player) && HasSpikesOut)
+        if (HasPixelPreciseCollision(player) && HasSpikesOut && level.Player.CanCollideWithObjects)
         {
             player.Die();
         }
