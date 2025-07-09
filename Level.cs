@@ -1,7 +1,8 @@
-﻿using Engine;
-using Microsoft.Xna.Framework;
-using System;
+﻿using System;
 using System.Collections.Generic;
+using System.Threading;
+using Engine;
+using Microsoft.Xna.Framework;
 
 namespace TickTickBoom
 {
@@ -10,17 +11,21 @@ namespace TickTickBoom
         #region Constants
         public const int TileWidth = 72;
         public const int TileHeight = 55;
-        public string BACKGROUND_SKY = "Sprites/Backgrounds/spr_sky";
+        public const string BACKGROUND_SKY = "Sprites/Backgrounds/spr_sky";
+
+        public const string BACKGROUND_MOUNTAINS = "Sprites/Backgrounds/spr_mountain_";
         #endregion
 
         #region Member Variables
         Tile[,] tiles;
         List<Waterdrop> waterDrops;
+        List<SpriteGameObject> backgrounds;
         SpriteGameObject goal;
         Player player;
 
         bool isLevelComplete;
-        // BombTimer bombTimer;
+
+        BombTimer bombTimer;
         #endregion
 
         #region Properties
@@ -33,6 +38,14 @@ namespace TickTickBoom
         {
             get;
             private set;
+        }
+
+        public BombTimer Timer
+        {
+            get
+            {
+                return bombTimer;
+            }
         }
         public Tile.TileType GetTileType(int x, int y)
         {
@@ -111,7 +124,12 @@ namespace TickTickBoom
             AddChild(backgroundSky);
             LoadLevelFromFile(fileName);
             isLevelComplete = false;
+            bombTimer = new BombTimer();
+            AddMountains();
+            AddClouds();
+            AddChild(bombTimer);
         }
+
         #endregion
 
         #region Public Methods 
@@ -128,9 +146,13 @@ namespace TickTickBoom
             if (isLevelComplete == false && IsAllDropsCollected == true && Player.HasPixelPreciseCollision(goal))
             {
                 isLevelComplete = true;
+                bombTimer.IsRunning = false;
                 ExtendedGameWithLevels.GetPlayingState().LevelCompleted(LevelIndex);
                 Player.Celebrate();
-                // bombTimer.IsRunning = false;
+            }
+            else if (Player.IsAlive && bombTimer.HasTimeLeftExpired)
+            {
+                Player.Explode();
             }
         }
 
@@ -146,6 +168,25 @@ namespace TickTickBoom
         {
             return GetCellPosition(x, y + 1) + new Vector2(TileWidth / 2, 0);
         }
+
+        private void AddMountains()
+        {
+            for (int i = 0; i < 4; i++)
+            {
+                SpriteGameObject backgroundMountain = new SpriteGameObject(BACKGROUND_MOUNTAINS + (ExtendedGame.Random.Next(2) + 1), TickTickBoom.DEPTH_LAYER_BACKGROUND + .01f * (float)ExtendedGame.Random.NextDouble());
+                backgroundMountain.LocalPosition = new Vector2(backgroundMountain.Width * (i - 1) * 0.4f, BoundingBox.Height - backgroundMountain.Height);
+                backgrounds.Add(backgroundMountain);
+            }
+        }
+
+        private void AddClouds()
+        {
+            for (int i = 0; i < 6; i++)
+            {
+                backgrounds.Add(new Cloud(this));
+            }
+        }
+
         #endregion
     }
 }

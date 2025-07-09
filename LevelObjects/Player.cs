@@ -14,6 +14,12 @@ namespace TickTickBoom
         const string CELEBRATION_ANIMATION_LOCATION = "Sprites/LevelObjects/Player/spr_celebrate@14";
         const string DIE_ANIMATION_LOCATION = "Sprites/LevelObjects/Player/spr_die@5";
         const string EXPLODE_ANIMATION_LOCATION = "Sprites/LevelObjects/Player/spr_explode@5x5";
+
+        const string JUMP_SOUND_EFFECT_LOCATION = "Sounds/snd_player_jump";
+        const string EXPLODE_SOUND_EFFECT_LOCATION = "Sounds/snd_player_explode";
+
+        const string DIE_SOUND_EFFECT_LOCATION = "Sounds/snd_player_die";
+
         const float WALKING_SPEED = 425.5f;
         const float IDLE_ANIMATION_FRAMETIME = .1f;
         const float RUN_ANIMATION_FRAMETIME = .04f;
@@ -21,6 +27,7 @@ namespace TickTickBoom
         const float CELEBRATE_ANIMATION_FRAMETIME = .05f;
         const float DIE_ANIMATION_FRAMETIME = .1f;
         const float EXPLODE_ANIMATION_FRAMETIME = .04f;
+
         const float JUMP_SPEED = 900.0f;
         const float GRAVITY = 2300.0f;
         const float MAX_FALL_SPEED = 1200.0f;
@@ -32,6 +39,7 @@ namespace TickTickBoom
         // Flag to check if player is facing left or not
         bool isFacingLeft;
         bool isGrounded;
+        bool isExploding;
         private bool isStandingOnIceTile;
         private bool isStandingOnHotTile;
         private bool isCelebrating;
@@ -180,14 +188,14 @@ namespace TickTickBoom
                 {
                     Die();
                 }
-                // if (isStandingOnHotTile)
-                // {
-                //     level.Timer.Multiplier = 2;
-                // }
-                // else
-                // {
-                //     level.Timer.Multiplier = 1;
-                // }
+                if (isStandingOnHotTile)
+                {
+                    level.Timer.TimeMultiplier = 2;
+                }
+                else
+                {
+                    level.Timer.TimeMultiplier = 1;
+                }
             }
         }
         public void Celebrate()
@@ -203,11 +211,23 @@ namespace TickTickBoom
             IsAlive = false;
             PlayAnimation("die");
             velocity = new Vector2(0, -JUMP_SPEED);
+            ExtendedGame.AssetManager.PlaySoundEffect(DIE_SOUND_EFFECT_LOCATION);
         }
+        public void Explode()
+        {
+            IsAlive = false;
+            isExploding = true;
+            PlayAnimation("explode");
+            velocity = Vector2.Zero;
+            ExtendedGame.AssetManager.PlaySoundEffect(EXPLODE_SOUND_EFFECT_LOCATION);
+
+        }
+
         public void Jump(float speed = JUMP_SPEED)
         {
             velocity.Y -= speed;
             PlayAnimation("jump");
+            ExtendedGame.AssetManager.PlaySoundEffect(JUMP_SOUND_EFFECT_LOCATION);
         }
         #endregion
         #region Private Methods
@@ -312,6 +332,7 @@ namespace TickTickBoom
             isStandingOnIceTile = false;
             IsAlive = true;
             isGrounded = true;
+            isExploding = false;
         }
         #endregion
     }
